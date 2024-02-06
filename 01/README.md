@@ -12,7 +12,7 @@
 그런데 결과값을 사용하기 위해 메모리 조작을 통해서 값에 접근하면 치명적인 오류를 발생시킬 수 있기 때문에 자바스크립트는 메모리 조작을 허용하지 않는다.
 저장된 결과값인 30을 사용하려면 값의 위치를 가리키는 이름을 붙여서 접근하면 된다.
 
-```text
+```javascript
 // 변수는 하나의 값을 저장하기 위한 수단이다
 var userId = 1;
 var userName = James;
@@ -32,7 +32,7 @@ var users = [
 ```
 ## 변수와 식별자
 - 변수 = 변경 가능한 데이터를 뜻하며 '데이터가 담길 수 있는 공간 또는 그릇'을 말한다.
-```text
+```javascript
 var name = '이지은';
 ```
 문자열 '이지은' 데이터 값이 변수에 할당되는 것이고, 이 변수의 식별자는 name으로 할당된다.  
@@ -41,7 +41,7 @@ var name = '이지은';
 
 ## var / let / const 정리
 변수를 선언할 때 var, let, const 키워드를 사용한다. ES6부터 let과 const를 도입하기 시작했다. var 키워드로 선언하면 변수에 값을 할당하지 않았어도 자바스크립트 엔진에 의해 undefined가 암묵적으로 할당되어 초기화된다. (let, const는 아님)
-```text
+```javascript
 var emptyValue; // undefined
 // 초기화 : 변수가 선언된 이후 최초로 값을 할당하는 것
 ```
@@ -50,20 +50,20 @@ var emptyValue; // undefined
 - 초기화단계: 값을 저장하기 위해 메모리공간을 확보하고 암묵적으로 undefined를 할당해서 초기화한다.  
 
 var을 사용해서 변수 선언을 했다면 이 2단계가 동시에 진행된다.
-```text
+```javascript
 console.log(x); // undefined;
 var x; // 변수 선언문
 ```
 위에서부터 순차적으로 소스코드가 실행될 거라고 예상하고 콘솔에 참조 에러가 뜰 거라고 생각할 수 있지만, var로 선언했다면 실행 이전(런타임 이전)에 먼저 변수 선언이 실행되기 때문에 콘솔에 undefined가 찍힌다. 
-```text
+```javascript
 console.log(x); // throws a ReferenceError
 const x = 'hello';
-``````
+```
 스코프 안의 어디에서 변수 선언을 했든 최상위에서 선언된 것과 동등한 자바스크립트의 특징을 변수 호이스팅이라고 한다. 
 let/const면 호이스팅되지만 undefined를 반환하지 않기 때문에 ReferenceError를 던질 것이다.
 
 그럼 아래 예시에서의 콘솔값을 이렇게 예상할 수 있다.
-```text
+```javascript
 console.log(exampleValue); // undefined;
 
 var exampleValue; // 1) 변수 선언
@@ -72,7 +72,7 @@ exampleValue = '가나다'; // 2) 값 할당
 console.log(exampleValue); // '가나다'
 ```
 위의 예시에서 변수 선언하고 값을 할당하는 두 줄을 
-```text
+```javascript
 var exampleValue = '가나다';
 ```
 이처럼 한 줄로 줄여쓰기도 가능하다. 
@@ -89,14 +89,14 @@ var exampleValue = '가나다';
 어휘적 바인딩이 실행되기 전까지 액세스할 수 없는 현상을 Temporal Dead Zone(TDZ)라고 한다. TDZ는 초기화되지 않은 바인딩에 접근하려는 경우, 예기치 않은 결과를 내는 대신에 개발자에게 에러 피드백을 제공하기 때문에 유용하게 사용된다.
 
 - 재할당의 경우 
-```text 
+```javascript
 let a = 100;
 a = 150;
 ```
 이때 a의 새로운 값이 기존의 값이 든 메모리 주소에 그대로 덮어씌워지는 게 아니라, 새로운 메모리 주소에 값 150이 들어가고 100과 같이 식별자와 연결되지 않은 불필요한 값들은 가비지 콜렉터에 의해 메모리에서 자동으로 해제된다. (해제시점은 모름)
 
 ## 식별자 네이밍 컨벤션
-```text
+```javascript
 // camelCase
 var namingRule;
 
