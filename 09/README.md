@@ -78,7 +78,7 @@ console.log(x); // 1
 console.log(y); // ReferenceError: y is not defined.
 ```
 - 함수 내의 코드 블록은 함수 레벨 스코프에 중첩된다. 
-![alt text](https://file%2B.vscode-resource.vscode-cdn.net/Users/wangjieun/Desktop/modernJSdeepdive/09/scope.png?version%3D1710226082559)
+![scope](https://github.com/Jieunwang0/modern-javascript-deep-dive/assets/134492810/b6312a7c-a36c-4904-84bd-cc7cf791fb44)
 
 ### 변수 호이스팅
 - 변수 호이스팅이 발생하지 않는 것처럼 동작한다. 
@@ -97,7 +97,8 @@ console.log(foo); // 1
 ```
  선언 단계와 초기화 단계 사이의 일시적 사각지대(Temporal Dead Zone)에서는 변수를 참조할 수 없다.
 
-![alt text](https://file%2B.vscode-resource.vscode-cdn.net/Users/wangjieun/Desktop/modernJSdeepdive/09/letvariable.png?version%3D1710226897906)
+![letvariable](https://github.com/Jieunwang0/modern-javascript-deep-dive/assets/134492810/6a46ed49-1c95-4e99-9fc7-189853b58168)
+
 
 
 그리고 변수 호이스팅이 발생하지 않는 것처럼 보인다고 했는데 사실은 그렇지 않다. 

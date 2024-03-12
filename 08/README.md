@@ -2,7 +2,7 @@
 
 함수는 일련의 과정을 문으로 구현하고 코드 블록으로 감싸서 하나의 실행 단위로 정의한 것이다.
 
-![alt text](https://file%2B.vscode-resource.vscode-cdn.net/Users/wangjieun/Desktop/modernJSdeepdive/08/funcB.png?version%3D1708957666444)
+![funcB](https://github.com/Jieunwang0/modern-javascript-deep-dive/assets/134492810/2cc27fb7-1f87-42c7-8fab-160bd854c840)
 
 ```javascript
 // 함수 정의
@@ -143,7 +143,7 @@ console.log(add(2, 4)); // 6
 
 함수 외부에서 함수 내부로 함수를 실행하는데 필요한 값을 전달해야 할 때 매개변수(parameter)를 통해 인수(argument)를 전달한다. 인수는 값으로 표현할 수 있는 표현식이어야 한다.
 
-![alt text](https://file%2B.vscode-resource.vscode-cdn.net/Users/wangjieun/Desktop/modernJSdeepdive/08/parameter.png?version%3D1709022247983)
+![parameter](https://github.com/Jieunwang0/modern-javascript-deep-dive/assets/134492810/dad051e9-e5db-4a55-a94f-3d41b0c7e547)
 
 매개변수는 함수의 몸체 내부에서 변수와 동일하게 취급된다.함수가 호출될 때 암묵적으로 매개변수가 생성되고 일반 변수처럼 undefined로 초기화된 이후 인수가 매개변수로 순서대로 전달되고 함수가 실행된다.
 

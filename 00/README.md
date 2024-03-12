@@ -20,7 +20,7 @@ console.log(number * number); // NaN
 ```
 number라는 이름의 변수에는 숫자를 할당하는 게 의미적으로 맞기 때문에 이 문장은 문법적으로는 맞지만 의미적으로 옳지 않은 문장이다.
 
-![Alt text](68747470733a2f2f706f69656d617765622e636f6d2f696d672f636f64696e672e706e67.png)
+![68747470733a2f2f706f69656d617765622e636f6d2f696d672f636f64696e672e706e67](https://github.com/Jieunwang0/modern-javascript-deep-dive/assets/134492810/1b05c527-dc04-4530-9875-686bd78b4748)
 
 # 자바스크립트의 진화
 ---
@@ -30,7 +30,9 @@ number라는 이름의 변수에는 숫자를 할당하는 게 의미적으로 �
 ECMA Script는 자바스크립트의 표준 사양인 ECMA-262를 말하며,
 프로그래밍 언어의 값, 타입, 객체와 프로퍼티, 함수, 표준 빌트인 객체 등 핵심 분법을 규정한다.
 자바스크립트는 ECMAScript를 준수하고, 브라우저가 별도 지원하는 클라이언트 사이드 Web API를 말한다.
-![Alt text](<image (1).png>)
+
+<img width="504" alt="image (1)" src="https://github.com/Jieunwang0/modern-javascript-deep-dive/assets/134492810/78193407-44b0-453e-a83f-863c5f358496">
+
 ## Ajax 
 자바스크립트를 이용해 서버와 브라우저가 비동기로 데이터를 교환할 수 있는 기능인 Ajax가 XMLHttpRequest 라는 이름으로 등장했다. 
 이전에는 완전한 HTML 코드를 서버로부터 내려받아 전체를 렌더링해야 했다. 그래서 불필요한 데이터 통신과 사용자 경험에 좋지 않은 전체 화면의 깜박임이 발생했는데 Ajax의 등장으로 필요한 부분의 데이터만 렌더링하는 방식의 화면 전환이 가능해졌다. 
