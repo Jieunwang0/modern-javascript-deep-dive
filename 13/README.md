@@ -213,4 +213,205 @@ Object 생성자 함수 호출과 객체 리터럴의 평가는 추상 연산을
 자바스크립트는 객체의 프로퍼티에 접근하려고 할 때 해당 객체에 접근하려는 프로퍼티가 없다면 [[Property]] 내부 슬롯의 참조를 따라 부모 객체인 프로토타입의 프로퍼티를 순차적으로 검색한다.
 
 체인의 종점인 Object.prototype에도 없다면 undefined를 반환한다.
+
 ### 오버라이딩과 프로퍼티 섀도잉
+- **오버라이딩**: 부모 클래스가 가진 메서드를 자식 클래스가 상속받아 재정의하여 사용하는 방식
+
+```javascript
+ const Person = (function () {
+    function Person(name){
+        this.name = name;
+    }
+
+    Person.prototype.sayHello = function () {
+        console.log(`Hi! My name is ${this.name}.`);
+    };
+
+    return Person;
+ }());
+
+ const me = new Person('Lee');
+
+ me.sayHello = function () {
+    console.log(`Hey, My name is ${this.name}.`);
+ };
+
+ me.sayHello(); // Hey, My name is Lee.
+```
+
+![overriding](https://github.com/Jieunwang0/modern-javascript-deep-dive/assets/134492810/2261057c-0f4f-47ba-b393-c70943c2dbc5)
+
+- 프로토타입이 소유한 프로퍼티: *프로토타입 프로퍼티*
+- 인스턴스가 소유한 프로퍼티: *인스턴스 프로퍼티*
+
+위 그림으로 설명하면 Person.prototype에 있는 sayHello는 프로토타입 메서드(상위)이고, me의 sayHello는 인스턴스 메서드(하위)이다.
+
+me.sayHello();를 하게되면 Person.prototype.sayHello의 내용인 Hi! ...가 나오는 것이 아니라 재정의한 내용인 Hey, ... 가 나오게 된다. 
+
+인스턴스 메서드 sayHello는 프로토타입 메서드인 sayHello를 덮어쓰는 것이 아니라 재정의해서 사용한 것인데, 이를 `오버라이딩`이라고 한다. 그리고 프로토타입 메서드인 sayHello는 가려진다. 이를 `프로퍼티 섀도잉`이라고 한다.
+
+---
+
+인스턴스 메서드 sayHello를 삭제하는 과정을 하단의 예시를 통해 알아보자.
+```javascript
+delete me.sayHello;
+
+me.sayHello(); // Hi! My name is Lee.
+```
+인스턴스 메서드가 삭제되고 상위 클래스인 프로토타입 메서드가 호출된다.
+
+프로토타입 프로퍼티를 변경 혹은 삭제하려면 프로토타입에 직접 접근해서 조작해야한다.
+```javascript
+delete Person.prototype.sayHello;
+
+me.sayHello(); // TypeError: me.sayHello is not a function
+```
+---
+### 프로토타입의 교체
+- **생성자 함수**에 의한 교체
+- 인스턴스에 의한 교체
+
+프로토타입의 교체는 가능하지만 기존의 생성자 함수의 프로토타입 객체가 가지고 있던 **constructor 프로퍼티가 사라지고**, 이때 생성자 함수에 의해 생성된 `인스턴스가 상속받는 프로토타입 객체는` 생성자 함수의 프로토타입 객체가 아닌, 그 위의 최상위 객체이자 constructor 프로퍼티를 가지고 있는 `Object.prototype`이 된다.
+
+
+즉 생성자 함수와 생성자 함수의 프로토타입 객체 간 연결이 끊어지게 될 뿐만 아니라 생성자 함수의 프로토타입 프로퍼티가 기존의 프로토타입 객체의 프로퍼티나 메서드를 상속받던 다른 인스턴스에게 영향을 끼칠 수 있기 때문에 프로토타입의 변경은 코드 테스트나 기존의 라이브러리의 확장을 위한 용도로나 사용하지, 일반적인 상황에서 프로토타입을 변경하는 것은 `권장하지 않는다`.
+
+#### 생성자 함수에 의한 교체
+```javascript
+const Person = (function() {
+    function Person(name){
+        this.name = name;
+    }
+    Person.prototype = {
+        // constructor: Person,
+        sayHello() {
+            console.log(`Hi! My name is ${this.name}`);
+        }
+    };
+    return Person;
+}());
+
+const me = new Person('Lee');
+
+console.log(me.constructor === Person); // false
+// 코드의 constructor 주석 해제하면 true
+
+console.log(me.constructor === Object); // true
+// 코드의 constructor 주석 해제하면 false
+```
+
+- 생성자 함수로 프로토타입을 교체하면 생성자 함수의 prototype 프로퍼티가 `교체된 프로토타입을 가리킨다.` 
+
+<img width="229" alt="byconstructor" src="https://github.com/Jieunwang0/modern-javascript-deep-dive/assets/134492810/35df3da6-352e-4687-8c0e-8fabd901a74b">
+
+
+#### 인스턴스에 의한 교체
+인스턴스의 __ proto __ 접근자 프로퍼티를 통해 교체할 수 있다.
+```javascript
+function Person(name){
+    this.name = name;
+}
+
+const me = new Person('Lee');
+
+const parent = {
+    sayHello(){
+    console.log(`Hi! My name is ${this.name}`);
+    }
+};
+// me 객체의 프로토타입을 parent 객체로 교체한다.
+Object.setPrototypeOf(me, parent);
+// me.__proto__ = parent; 와 동일하게 동작한다.
+me.sayHello(); // Hi! My name is Lee
+
+console.log(me.constructor === Person); // false
+
+console.log(me.constructor === Object); // true
+```
+
+- 인스턴스로 프로토타입을 교체하면 생성자 함수의 prototype 프로퍼티가 `교체된 프로토타입을 가리키지 않는다.`
+
+<img width="255" alt="byinstance" src="https://github.com/Jieunwang0/modern-javascript-deep-dive/assets/134492810/61fdac4d-40cf-4577-8fd3-c9044d91f691">
+
+## instanceof 연산자
+이항 연산자이며, 우변의 피연산자가 함수가 아니면 TypeError 발생.
+```
+객체 instanceof 생성자 함수
+```
+우변의 prototype에 바인딩된 객체가 좌변의 프로토타입 체인 상에 **존재하면** -> true, 아니면 false.
+
+프로토타입 교체로 인해 constructor 프로퍼티와 생성자 함수 간의 연결이 파괴되어도, 생성자 함수의 prototype 프로퍼티와 프로토타입 간의 연결은 파괴되지 않으므로 instanceof는 영향을 받지 않는다. 
+
+## 직접 상속
+- Object.create
+    - new 연산자가 없어도 객체 생성 O
+    - 프로토타입을 지정하면서 객체 생성 O
+    - 객체 리터럴에 의해 생성된 객체도 상속 O
+
+- 객체 리터럴 내부에서 __ proto __ (ES6)
+## 정적 프로퍼티/메서드
+생성자 함수로 인스턴스를 생성하지 않아도 참조/호출할 수 있는 프로퍼티/메서드를 말한다. 
+
+```javascript
+function Person(name){
+    this.name = name;
+}
+Person.prototype.sayHello = function() {
+    console.log(`Hi! My name is ${this.name}.`)
+};
+
+// 정적 프로퍼티
+Person.staticProperty = 'static Property';
+// 정적 메서드
+Person.staticMethod = function(){
+    console.log('staticMethod');
+};
+
+const me =  new Person('Lee');
+
+Person.staticMethod(); // staticMethod
+
+me.staticMethod(); // TypeError: me.staticMethod is not a function
+```
+## 프로퍼티 존재 확인
+- in 연산자
+- Reflect.has(object, key)
+- Object.prototype.hasOwnProperty
+### in 연산자
+객체 내에 특정 프로퍼티의 존재 여부를 확인한다.
+```javascript
+/**
+ * key: 프로퍼티 키를 나타내는 문자열
+ * object: 객체로 평가되는 표현식
+ */
+
+key in object
+```
+확인 대상 객체의 프로퍼티뿐만 아니라 확인 대상 객체가 `상속받은 모든 프로토타입의 프로퍼티`를 확인한다. 상속받은 프로퍼티 키일 경우도 true를 반환한다.
+
+ES6부터 in 연산자와 동일하게 동작하는 Reflect.has메서드를 사용할 수도 있다.
+```javascript
+Reflect.has(object, key)
+```
+
+### Object.prototype.hasOwnProperty
+```javascript
+객체의 식별자명.hasOwnProperty(key);
+```
+in 연산자와 다르게 인수로 전달받은 key가 객체 **고유의 프로퍼티 키일 경우에만 true**를 반환하고, 상속받은 프로퍼티 키일 경우에는 false를 반환한다.
+## 프로퍼티 열거
+- for ... in 문
+- Object.keys/value/entries
+### for ... in 문
+객체의 모든 프로퍼티를 순회하면서 열거할 때 사용한다.
+```javascript
+for (변수 선언문 in 객체) {...}
+```
+순회 대상 객체의 프로퍼티뿐만 아니라 상속받은 프로토타입의 프로퍼티까지 프로퍼티 어트리뷰트 **[[Enumerable]]이 true인 프로퍼티를 순회하며 열거한다.**
+
+- [[Enumerable]]: 프로퍼티 열거 가능 여부를 나타내며 불리언값을 가진다.
+그리고 for ... in문은 열거할 때 순서를 보장하지 않지만 대부분의 모던 브라우저는 순서를 보장하고 **숫자**(지만 사실은 **문자열**) 프로퍼티에는 정렬을 실시한다.
+
+배열에는 for문 / for ... of / Array.prototype.forEach 메서드를 권장한다.
+###  Object.keys/value/entries
+객체 고유의 프로퍼티만 열거하기 위해서는 Object.keys/value/entries 메서드를 권장한다.
