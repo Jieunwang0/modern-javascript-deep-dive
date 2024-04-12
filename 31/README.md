@@ -368,7 +368,7 @@ NodeList 객체는 대부분 Non-live 객체지만 childNodes 프로퍼티가 �
 
 ![images-hang_kem_0531-post-4046b3fb-d6fc-4117-a9ec-a00b33fa8eea-image](https://github.com/Jieunwang0/modern-javascript-deep-dive/assets/134492810/32bec6f0-f95b-435c-8441-d9b63ae88776)
 
-노드 탐색 프로퍼티는 모두 접근자 프로퍼티고, setter 없이 getter만 존재해서 참조만 가능한 readonly property이다.
+`노드 탐색 프로퍼티는` 모두 접근자 프로퍼티고, setter 없이 getter만 존재해서 참조만 가능한 `readonly property`이다.
 
 ### 자식 노드 탐색
 
@@ -385,9 +385,9 @@ NodeList 객체는 대부분 Non-live 객체지만 childNodes 프로퍼티가 �
 
 : **Node.prototype.hasChildNodes**
 
--   Node.prototype.hasChildNodes 메서드는 텍스트 노드를 포함해서 자식 노드의 존재 여부를 불리언 값으로 반환한다.
+-   Node.prototype.hasChildNodes 메서드는 텍스트 노드를 포함해서 자식 노드의 존재 여부를 `불리언 값으로 반환한다.`
 
--   텍스트 노드가 아닌 요소 노드가 존재하는지 확인하려면 children.length나 Element 인터페이스의 childElementCount 프로퍼티를 사용한다.
+-   텍스트 노드가 아닌 요소 노드가 존재하는지 확인하려면 **children.length**나 Element 인터페이스의 **childElementCount** 프로퍼티를 사용한다.
 
 ### 요소 노드의 텍스트 노드 탐색
 
@@ -430,7 +430,7 @@ NodeList 객체는 대부분 Non-live 객체지만 childNodes 프로퍼티가 �
 
 ### 형제 노드 탐색
 
-`어트리뷰트 노드는` 요소 노드와 연결되어 있지만 부모가 같은 형제 노드가 아니기 때문에 `반환되지 않는다.` 아래 프로퍼티들은 요소/텍스트 노드만 반환한다.
+**어트리뷰트 노드는** 요소 노드와 연결되어 있지만 부모가 같은 형제 노드가 아니기 때문에 **반환되지 않는다.** 아래 프로퍼티들은 `요소/텍스트 노드만 반환한다.`
 
 |                 프로퍼티                 | 설명                                                                  |
 | :--------------------------------------: | --------------------------------------------------------------------- |
@@ -455,13 +455,13 @@ NodeList 객체는 대부분 Non-live 객체지만 childNodes 프로퍼티가 �
 
 -   setter와 getter 모두 있는 접근자 프로퍼티
 -   텍스트 노드의 텍스트를 반환한다.
--   텍스트 노드가 아닌 노드, 즉 문서 노드나 요소 노드를 nodeValue로 참조하려 하면 null을 반환한다.
--   요소 노드를 취득하고, fistChild로 탐색할 텍스트 노드를 탐색한 후 nodeValue로 값을 취득/변경한다.
+-   텍스트 노드가 아닌 노드, 즉 문서 노드나 요소 노드를 nodeValue로 참조하려 하면 `null을 반환한다.`
+-   요소 노드를 취득하고, fistChild로 탐색할 **텍스트 노드를 탐색한 후** nodeValue로 값을 취득/변경한다.
 
 ### textContent
 
 -   setter와 getter 모두 있는 접근자 프로퍼티
--   요소 노드의 콘텐츠 영역(<>와 </>사이)내의 텍스트를 HTML 마크업을 무시하고 모두 반환한다.
+-   요소 노드의 콘텐츠 영역(<>와 </>사이)내의 `HTML 마크업을 무시하고 남은 텍스트를 모두 반환한다.`
 -   요소 노드를 취득하고 textContent로 요소 내의 텍스트를 모두 취득/변경한다.
 
 ```javascript
@@ -499,12 +499,13 @@ NodeList 객체는 대부분 Non-live 객체지만 childNodes 프로퍼티가 �
 ### innerHTML
 
 -   setter와 getter 모두 있는 접근자 프로퍼티
--   요소 노드의 콘텐츠 영역(<>와 </>사이)내의 텍스트를 HTML 마크업을 포함하고 모두 문자열로 반환한다.
--   단점
+-   요소 노드의 콘텐츠 영역(<>와 </>사이)내의 `HTML 마크업을 포함한 모든 텍스트를 문자열로 반환한다.`
+-   \*단점
     -   \*XSS: Cross-Site Scripting Attacks에 취약
         -   사용자로부터 입력받은 데이터를 그대로 innerHTML에 할당하는 것은 HTML 마크업 내에 악성 코드가 그대로 포함되어 있다면 파싱 과정에서 실행될 위험이 있기 때문에 위험하다.
     -   \*요소 노드의 innerHTML 프로퍼티에 HTML 마크업 문자열을 할당하는 경우 요소의 모든 자식 노드를 제거하고 할당한 HTML 마크업 문자열을 파싱하려 DOM을 변경한다.
     -   \*요소를 삽입하려 할 때 삽입할 위치를 지정할 수 없다.
+-   innerHTML의 사용은 지양하는 것이 좋고 일반 텍스트를 삽입할 때는 Node.textContent를 사용하는 것을 권장한다.
 
 #### XSS: Cross-Site Scripting Attacks에 취약
 
@@ -528,6 +529,7 @@ NodeList 객체는 대부분 Non-live 객체지만 childNodes 프로퍼티가 �
     const $fruit= document.getElementById('fruit');
 
     $fruit.innerHTML += '<li class="orange">Orange</li>'
+
   </script>
 ```
 
@@ -554,7 +556,7 @@ $fruit.innerHTML = $fruit.innerHTML + '<li class="orange">Orange</li>';
 
 ### insertAdjacentHTML
 
-위 단점을 보완된 insertAdjacentHTML 메서드를 사용하면 기존 요소를 제거하지 않으면서 동시에 위치를 지정해 새로운 요소로 삽입할 수 있다.
+insertAdjacentHTML 메서드를 사용하면 기존 요소를 제거하지 않으면서 동시에 위치를 지정해 새로운 요소로 삽입할 수 있다.
 
 <img width="430" alt="image (8)" src="https://github.com/Jieunwang0/modern-javascript-deep-dive/assets/134492810/b26843e5-93d7-40b6-a702-985113b8f443">
 
@@ -588,7 +590,7 @@ $fruit.innerHTML = $fruit.innerHTML + '<li class="orange">Orange</li>';
 </html>
 ```
 
-하지만 insertAdjacentHTML 메서드 또한 HTML 마크업 문자열을 그대로 파싱하므로 크로스 사이트 스크립팅 공격에 취약하다는 점은 동일하다.
+하지만 insertAdjacentHTML 메서드 또한 HTML 마크업 문자열을 그대로 파싱하므로 크로스 사이트 스크립팅 공격에 취약하다는 보안상의 이슈가 해결되진 않지만 자식 요소의 파싱 과정이 생략되기 때문에 성능상 훨씬 좋다.
 
 ### 노드 생성과 추가
 
@@ -598,12 +600,16 @@ $fruit.innerHTML = $fruit.innerHTML + '<li class="orange">Orange</li>';
 Document.prototype.createElement(tagname)
 ```
 
-createElement를 통해 생성하면 요소 노드를 생성할 뿐 기존 DOM에 추가하지 않기 때문에 홀로 존재하는 상태다. 이후 기존 DOM에 추가하는 처리가 별도로 필요하고, 아무런 자식 노드가 없다.
+createElement를 통해 생성하면 요소 노드를 생성할 뿐 기존 DOM에 추가하지 않기 때문에 홀로 붕 떠서 존재하는 상태다.
+이후 기존 DOM에 추가하는 처리가 별도로 필요하고, 아무런 자식 노드가 없다.
 
 ```javascript
 // <div></div> 노드 생성
+
 let $li = document.createElement("li");
 ```
+
+<img width="640" alt="createElement" src="https://github.com/Jieunwang0/modern-javascript-deep-dive/assets/134492810/5bfa920e-b8c2-471e-86d9-80346b188796">
 
 #### 텍스트 노드 생성:
 
@@ -611,12 +617,15 @@ let $li = document.createElement("li");
 Document.prototype.createTextNode(text)
 ```
 
-원래 텍스트 노드는 요소의 자식인데, createTextNode로 생성한 텍스트 노드는 홀로 존재하는 상태이다. 이후 요소 노드에 추가하는 처리가 필요하다.
+원래 텍스트 노드는 요소의 자식인데, createTextNode로 생성한 텍스트 노드는 홀로 붕떠서 존재하는 상태이다. 이후 요소 노드에 추가하는 처리가 필요하다.
 
 ```javascript
 // <div> 사이에 들어갈 텍스트 노드 생성
+
 let text = document.createTextNode("Banana");
 ```
+
+<img width="640" alt="createTextNode" src="https://github.com/Jieunwang0/modern-javascript-deep-dive/assets/134492810/9c311e2f-415a-463b-b0ec-d08adfb8ea63">
 
 #### 텍스트 노드를 요소 노드의 자식 노드로 추가:
 
@@ -624,34 +633,41 @@ let text = document.createTextNode("Banana");
 Node.prototype.appendChild(textNode)
 ```
 
-appendChild 메서드를 `호출한 노드의 마지막 자식 노드로 추가한다.` 위치 지정 불가하고 무조건 마지막에 추가한다.
+appendChild 메서드를 `호출한 노드의 마지막 자식 노드로 추가한다.` 위치 지정 불가하고 무조건 **마지막**에 추가된다.
 
 ```javascript
 let $li = document.createElement("li");
 let text = document.createTextNode("Banana");
 
 // <div>노드에 텍스트 노드를 자식으로 추가
+
 $li.appendChild(text);
 ```
 
-<img width="695" alt="image (9)" src="https://github.com/Jieunwang0/modern-javascript-deep-dive/assets/134492810/41600380-86da-4860-8154-c531b52e54a0">
+![appendChild](https://github.com/Jieunwang0/modern-javascript-deep-dive/assets/134492810/d182ac98-e79c-4d49-9b87-c66ccb337f65)
 
-단, $li 요소에 자식 노드가 있는 경우 text 프로퍼티에 문자열을 할당하면 요소 노드의 모든 자식 노드가 제거되고 할당한 문자열이 텍스트로 추가되므로 주의해야한다.
+단, $li 요소에 자식 노드가 있는 경우 text 프로퍼티에 문자열을 할당하면 요소 노드의 `모든 자식 노드가 제거되고 할당한 문자열이 텍스트로 추가되므로 주의`해야한다.
 
-#### 요소 노드를 DOM에 추가도 appendChild
+#### 요소 노드를 DOM에 추가
 
 ```javascript
 $fruit.appendChild("$li");
 ```
 
-이때 DOM이 한번 변경되기 때문에 리플로우와 리페인트가 한번 실행된다. DOM이 여러번 변경되는 건 지양해야한다! 비용문제.
+<img width="640" alt="appendChildEle" src="https://github.com/Jieunwang0/modern-javascript-deep-dive/assets/134492810/7e0f885a-d936-43f8-860e-fee821cb703a">
 
-**Document.prototype.createDocumentFragment**로 비어있는 DocumentFragment 노드를 생성해서 기존 DOM에 한번만 변경을 시도하는 것이 효율적이다.
+이때 DOM이 한번 변경되기 때문에 리플로우와 리페인트가 한번 실행된다.
+
+DOM이 여러 번 변경되는 건 지양해야 한다.
+
+**Document.prototype.createDocumentFragment**로 비어있는 DocumentFragment 노드를 생성해서 기존 DOM에 `한 번만 변경을 시도`하는 것이 효율적이다.
 
 1. DocumentFragment 노드 생성
 2. 추가할 요소 노드 생성
 3. DocumentFragment에 자식 노드로 추가
 4. 기존 DOM에 추가
+
+<img width="640" alt="다운로드 (8)" src="https://github.com/Jieunwang0/modern-javascript-deep-dive/assets/134492810/abb103ce-6258-49fa-bc26-da6d03b9813b">
 
 ### 노드 삽입
 
@@ -675,8 +691,8 @@ DOM에 이미 존재하는 노드를 appendChild나 insertBefore 메서드로 �
 
 Node.prototype.cloneNode([deep: true | false])는 사본을 생성하여 반환한다.
 
--   매개변수 deep에 true => 깊은 복사, 모든 자손 노드를 포함한 사본
--   매개변수 deep에 false => 얕은 복사, 노드 자신만을 복사한 사본, 자손이 없으니 텍스트 노드도 없다.
+-   매개변수 deep에 `true => 깊은 복사`, 모든 자손 노드를 포함한 사본
+-   매개변수 deep에 `false => 얕은 복사`, 노드 자신만을 복사한 사본, 자손이 없으니 텍스트 노드도 없다.
 
 ```javascript
 element.cloneNode([deep: true | false])
@@ -706,7 +722,7 @@ parentNode.removeChild(child);
 
 ### Attribute Node & Attribute Property
 
-HTML가 파싱되면 HTML 요소의 어트리뷰트는 어트리뷰트 노드로 변환되어 요소 노드와 연결된다. 이때 하나의 어트리뷰트당 하나의 어트리뷰트 노드가 생성이 된다.
+HTML가 파싱되면 HTML 요소의 어트리뷰트는 어트리뷰트 노드로 변환되어 요소 노드와 연결된다. 이때 **하나의 어트리뷰트당 하나의 어트리뷰트 노드**가 생성이 된다.
 
 ```javascript
 <input id='user' type='text' value='book'>
@@ -716,7 +732,7 @@ HTML가 파싱되면 HTML 요소의 어트리뷰트는 어트리뷰트 노드로
 
 모든 어트리뷰트 노드의 참조는 유사 배열 객체이자, 이터러블인 NamedNodeMap 객체에 담겨서 요소 노드의 attributes 프로퍼티에 저장된다.
 
-Element.prototype.`attributes 프로퍼티`로 요소의 모든 어트리뷰트 노드를 취득할 수 있다.
+Element.prototype.`attributes` 프로퍼티로 요소의 모든 어트리뷰트 노드를 취득할 수 있다.
 
 -   getter만 존재하는 읽기 전용 접근자 프로퍼티
 -   요소 노드의 모든 어트리뷰트 노드의 참조가 담긴 NamedNodeMap 객체를 반환
@@ -738,7 +754,7 @@ console.log(attributes.value.value); // book
 
 ### HTML 어트리뷰트 조작
 
-Element.prototype.getAttribute/setAttribute를 사용하면 attributes 프로퍼티를 통하지 않아도 요소에서 메서드를 통해 HTML 어트리뷰트 값을 취득/변경할 수 있어서 편리하다.
+Element.prototype.`getAttribute` / `setAttribute`를 사용하면 attributes 프로퍼티를 통하지 않아도 요소에서 메서드를 통해 HTML 어트리뷰트 값을 취득/변경할 수 있어서 편리하다.
 
 ```javascript
 // HTML 어트리뷰트 값을 참조하려면
@@ -766,15 +782,126 @@ element.removeAttribute(attributeName);
 
 -   **어트리뷰트 노드 :**
 
-    -   HTML 어트리뷰트로 지정한 HTML 요소의 초기 상태는 어트리뷰트 노드에서 관리한다. 초기 상태를 취득/변경하려면 getAttribute/setAttribute 메서드를 사용한다.
+    -   HTML 어트리뷰트로 지정한 HTML 요소의 초기 상태는 어트리뷰트 노드에서 관리한다. `초기 상태를 취득/변경`하려면 getAttribute/setAttribute 메서드를 사용한다.
 
 -   **DOM 프로퍼티 :**
-    -   사용자가 입력한 최신 상태는 HTML 어트리뷰트에 대응하는 DOM 프로퍼티가 관리한다. 언제나 최신 상태를 유지한다.
-    -   DOM 프로퍼티에 값을 할당해도 HTML 요소에 지정한 어트리뷰트 값에는 영향X
+    -   사용자가 입력한 `최신 상태는` HTML 어트리뷰트에 대응하는 `DOM 프로퍼티`가 관리한다. 언제나 최신 상태를 유지한다.
+    -   DOM 프로퍼티에 값을 할당해도 HTML 요소에 지정한 어트리뷰트 값에는 **영향X**
 
-### data attribute & dataset property
+### data 어트리뷰트 & dataset 프로퍼티
 
+-   data 어트리뷰트
+
+    -   사용자가 HTML 요소에 추가 정보를 저장하거나 접근/조작하고 싶을 때 사용
+    -   data-role, data-user-id와 같이 data-접두사에 네이밍해서 사용
+
+-   dataset 프로퍼티
+    -   HTMLElement.dataset 프로퍼티로 모든 data 어트리뷰트 정보를 제공하는 `DOMStringMap 객체`값을 취득할 수 있다.
+    -   DOMStringMap 객체: data 어트리뷰트의 **data- 뒤의 네이밍을 카멜 케이스(fooBar)로 변환한 프로퍼티**를 가진다.
+    -   존재하지 않는 이름을 키로 dataset 프로퍼티에 할당하면 HTML 요소에 data 어트리뷰트가 추가된다.
+
+```javascript
+<!DOCTYPE html>
+<html>
+<body>
+  <ul class='users'>
+      <li id='1' data-user-id='7621'>Park</li>
+      <li id='2' data-user-id='9524'>Kim</li>
+    </ul>
+    <script>
+
+    const users = [...document.querySelector('.users').children];
+
+    const user = users.find(user => user.dataset.userId === '7621');
+
+    user.dataset.role = "admin";
+    console.log(user.dataset);
+    /*  DOMStringMap {userId: "7621", role: "admin"}
+    -> <li id='1' data-user-id="7621" data-role="admin">Park</li>
+    */
+  </script>
+  </body>
+</html>
+```
 
 ## 스타일
 
+### in-line 스타일 조작
+
+HTMLElement.prototype.style 프로퍼티는 setter와 getter 모두 존재하는 접근자 프로퍼티
+
+```javascript
+<!DOCTYPE html>
+<html>
+<body>
+<div style="color: red">red apple</div>
+    <script>
+      const $div = document.querySelector('div');
+// red -> green 으로 스타일 변경
+      $div.style.color = "green";
+// 길이 100px로 스타일 추가
+      $div.style.width = "100px";
+// 백그라운드컬러 스타일 추가
+      $div.style.backgroundColor = "black";
+  </script>
+  </body>
+</html>
+```
+
+### 클래스 조작
+
+class 어트리뷰트 조작 대응하는 DOM 프로퍼티
+
+#### className
+
+-   요소의 className 프로퍼티를 `참조`하면 class 어트리뷰트 값을 문자열로 반환한다.
+-   요소의 className 프로퍼티에 문자열을 `할당`하면 해당 문자열로 변경된다.
+-   className 프로퍼티는 **문자열을 반환**하므로 공백으로 구분된 여러개의 클래스를 반환하는 경우 다루기가 불편하다.
+
+#### classList
+
+Element.prototype.classList 프로퍼티는 class 어트리뷰트의 정보를 담은 DOMTokenList 객체를 반환한다.
+DOMTokenList는 아래 메서드들을 제공한다.
+
+-   **add:**
+    인수로 전달한 1개 이상의 문자열을 class 어트리뷰트 값으로 추가한다.
+    ```javascript
+    add(...className);
+    ```
+-   **remove:**
+    인수로 전달한 1개 이상의 문자열과 일치하는 클래스를 해당 class 어트리뷰트 값에서 삭제한다. 없으면 시도를 무시한다.
+    ```javascript
+    remove(...className);
+    ```
+-   **item:**
+    index에 해당하는 클래스를 class 어트리뷰트에서 반환한다.
+    ```javascript
+    item(index);
+    ```
+-   **contains:**
+    className과 일치하는 클래스가 class 어트리뷰트에 포함되어 있는지 확인하고 `불리언 값을 반환한다.`
+    ```javascript
+    contains(className);
+    ```
+-   **replace:**
+    class 어트리뷰트에서 oldClassName을 newClassName으로 대체한다.
+    ```javascript
+    replace(oldClassName, newClassName);
+    ```
+-   **toggle:**
+    class 어트리뷰트에 인수로 전달한 문자열과 일치하는 클래스가 존재하면 제거하고, 존재하지 않으면 추가한다.
+    -   force: true => class 어트리뷰트에 강제로 className을 추가
+    -   force: false => class 어트리뷰트에서 강제로 className을 제거
+    ```javascript
+    toggle(className, [force: true | false])
+    ```
+
 ## DOM 표준
+
+HTML과 DOM 표준은 W3C와 WHATWG에서 협력하면서 공통된 표준을 만들어왔다.
+|레벨|표준 문서 URL|
+|:---:|---|
+|DOM Level 1|https://www.w3.org/TR/REC-DOM-Level-1|
+|DOM Level 2|https://www.w3.org/TR/DOM-Level-2-Core/|
+|DOM Level 3|https://www.w3.org/TR/DOM-Level-3-Core/|
+|DOM Level 4|https://dom.spec.whatwg.org/|
